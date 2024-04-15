@@ -26,6 +26,8 @@ from Auput.utils.inline.playlist import botplaylist_markup
 from Auput.utils.logger import play_logs
 from Auput.utils.stream.stream import stream
 
+PLAY_COMMAND = get_command("PLAY_COMMAND")
+
 
 @app.on_message(filters.command(["شغل","تشغيل","ش"],"")
 & filters.group
@@ -53,6 +55,8 @@ async def play_commnd(
     url,
     fplay,
 ):
+    if not await check_is_joined(message):
+        return
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
