@@ -26,26 +26,6 @@ from Auput.utils.inline.playlist import botplaylist_markup
 from Auput.utils.logger import play_logs
 from Auput.utils.stream.stream import stream
 
-PLAY_COMMAND = get_command("PLAY_COMMAND")
-
-force_btn = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(   
-              text=f"اضغط للأشتراك .", url=f"t.me/mmmsc",)                        
-        ],        
-    ]
-)
-async def check_is_joined(message):    
-    try:
-        userid = message.from_user.id
-        user_name = message.from_user.first_name
-        status = await app.get_chat_member("mmmsc", userid)
-        return True
-    except Exception:
-        await message.reply_text(f'┇عزيزي: {message.from_user.mention}\n┇أشتࢪك في قناة البوت أولاً.\n┇قناة البوت: @mmmsc . 🍓 ',reply_markup=force_btn,disable_web_page_preview=False)
-        return False
-
 
 @app.on_message(filters.command(["شغل","تشغيل","ش"],"")
 & filters.group
@@ -73,8 +53,6 @@ async def play_commnd(
     url,
     fplay,
 ):
-    if not await check_is_joined(message):
-        return
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
